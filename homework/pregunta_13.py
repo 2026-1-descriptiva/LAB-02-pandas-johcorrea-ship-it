@@ -6,17 +6,13 @@ librerias de pandas para resolver las preguntas.
 """
 
 
-def pregunta_13():
-    """
-    Si la columna `c0` es la clave en los archivos `tbl0.tsv` y `tbl2.tsv`,
-    compute la suma de `tbl2.c5b` por cada valor en `tbl0.c1`.
+import pandas as pd
+import os
 
-    Rta/
-    c1
-    A    146
-    B    134
-    C     81
-    D    112
-    E    275
-    Name: c5b, dtype: int64
-    """
+def pregunta_13():
+    path0 = os.path.join(os.path.dirname(__file__), "..", "files", "input", "tbl0.tsv")
+    path2 = os.path.join(os.path.dirname(__file__), "..", "files", "input", "tbl2.tsv")
+    tbl0 = pd.read_csv(path0, sep="\t")
+    tbl2 = pd.read_csv(path2, sep="\t")
+    merged = tbl0.merge(tbl2, on="c0")
+    return merged.groupby("c1")["c5b"].sum()
